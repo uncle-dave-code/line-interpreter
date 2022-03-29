@@ -4,6 +4,17 @@
 Biblioteca para la interpretación de directivas y comandos en los valores de las propiedades del Bbr Customizer
 
 ## Definiciones
+Las directivas deben estar encerradas dentro de "{}" y no pueden haber directivas dentro de otras.
+
+Ejemplo:
+
+Input: property1-> LocalDate
+
+"Acá tenemos {1+1} directivas {Format($D,property1,#DD/MM/YYYY)}"
+
+Output: Acá tenemos 2 directivas 11/12/2022
+
+
 
 ### Sintaxis
 En el lenguaje, van existir:
@@ -32,8 +43,8 @@ En el lenguaje, van existir:
 
 | Operador | Descripción |
 |--|--|
-| + | Suma Numeric y concatena String |
-| - | Resta Numeric y concatena String |
+| + | Suma Numeric |
+| - | Resta Numeric |
 | * | Multiplica Numeric |
 | / | Divide Numeric |
 | == | Igual a |
@@ -46,13 +57,7 @@ En el lenguaje, van existir:
 | \| | Or lógico |
 
 #### Directivas
-- Las directivas comienzan con # seguido del nombre.
 
-| Directiva | Descripción |
-|--|--|
-| #if | #if()[] |
-| #else | #if()[] |
-| #format | #format(tipo,'formato') |
 
 
 > Written with [StackEdit](https://stackedit.io/).
