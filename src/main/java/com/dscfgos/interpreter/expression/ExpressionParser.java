@@ -1,9 +1,11 @@
 package com.dscfgos.interpreter.expression;
 
+import com.dscfgos.interpreter.classes.ExpressionType;
 import com.dscfgos.interpreter.classes.OperatorsUtils;
 import com.dscfgos.interpreter.classes.Property;
 import com.dscfgos.interpreter.expression.interfaces.Expression;
 import com.dscfgos.interpreter.expression.interfaces.NonTerminalExpression;
+import com.dscfgos.interpreter.expression.interfaces.TerminalExpression;
 
 import java.util.List;
 import java.util.Stack;
@@ -76,18 +78,19 @@ public class ExpressionParser {
         return output;
     }
 
-    public Expression evaluatePostFixArithmeticExpression(String postfix) {
+    public Expression evaluatePostFixExpression(String postfix, ExpressionType expressionType) {
         Expression output = null;
         if (postfix != null && !postfix.isBlank()) {
-            List<Expression> items = OperatorsUtils.splitPostfixArithmeticExpression(postfix);
+            List<Expression> items = OperatorsUtils.splitPostfixExpression(postfix, expressionType);
             Stack<Expression> stack = new Stack<>();
 
             for (var item : items) {
                 if (item instanceof NonTerminalExpression) {
                     Expression val1 = stack.pop();
-                    Expression val2 = stack.isEmpty() ? new ArithmeticExpression("0") : stack.pop();
+                    Expression val2 = stack.isEmpty() ? OperatorsUtils.getTerminalExpression(expressionType) : stack.pop();
                     ((NonTerminalExpression) item).setValues(val2, val1);
-                    stack.push(new ArithmeticExpression((Double) item.interpret()));
+
+                    stack.push(OperatorsUtils.getTerminalExpression(expressionType, item.interpret()));
                 } else {
                     stack.push(item);
                 }
@@ -98,38 +101,9 @@ public class ExpressionParser {
         return output;
     }
 
-    public Expression evaluatePostFixConditionalExpression(String postfix) {
-        Expression output = null;
-        if (postfix != null && !postfix.isBlank()) {
-            List<Expression> items = OperatorsUtils.splitPostfixConditionalExpression(postfix);
-            Stack<Expression> stack = new Stack<>();
-
-            for (var item : items) {
-                if (item instanceof NonTerminalExpression) {
-                    Expression val1 = stack.pop();
-                    Expression val2 = stack.isEmpty() ? new BooleanExpression(true) : stack.pop();
-                    ((NonTerminalExpression) item).setValues(val2, val1);
-                    stack.push(new BooleanExpression((Boolean) item.interpret()));
-                } else {
-                    stack.push(item);
-                }
-            }
-            output = stack.pop();
-
-        }
-        return output;
-    }
-
-    public String evaluateInfixArithmeticExpression(String expression) {
+    public String evaluateExpression(String expression, ExpressionType expressionType) {
         String postFixExpression = convertToPostFixExpression(expression);
-        Expression output = evaluatePostFixArithmeticExpression(postFixExpression);
-
-        return output.interpret().toString();
-    }
-
-    public String evaluateInfixConditionalExpression(String expression) {
-        String postFixExpression = convertToPostFixExpression(expression);
-        Expression output = evaluatePostFixConditionalExpression(postFixExpression);
+        Expression output = evaluatePostFixExpression(postFixExpression, expressionType);
 
         return output.interpret().toString();
     }

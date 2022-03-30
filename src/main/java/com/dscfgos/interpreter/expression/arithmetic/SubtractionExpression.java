@@ -30,8 +30,8 @@ public class SubtractionExpression implements NonTerminalExpression {
     public String toString() { return "-"; }
 
     @Override
-    public void setValues(Expression value1, Expression value2) {
-        this.firstExpression = value1;
-        this.secondExpression = value2;
+    public void setValues(Expression firstExpression, Expression secondExpression) {
+        this.firstExpression = firstExpression;
+        this.secondExpression = secondExpression;
     }
 }

@@ -3,19 +3,19 @@ package com.dscfgos.interpreter.expression;
 import com.dscfgos.interpreter.expression.interfaces.Expression;
 import com.dscfgos.interpreter.expression.interfaces.TerminalExpression;
 
-public class ArithmeticExpression implements TerminalExpression {
+public class RelationalExpression implements TerminalExpression {
 
     private Object value;
 
-    public ArithmeticExpression(Double value) {
+    public RelationalExpression(Double value) {
         this.value = value;
     }
 
-    public ArithmeticExpression(String value) {
+    public RelationalExpression(String value) {
         this.value = Double.valueOf(value);
     }
 
-    public ArithmeticExpression(Object value) {
+    public RelationalExpression(Object value) {
         this.value = value;
     }
 

@@ -1,4 +1,4 @@
-package com.dscfgos.interpreter.expression.conditional;
+package com.dscfgos.interpreter.expression.logical;
 
 import com.dscfgos.interpreter.expression.interfaces.Expression;
 import com.dscfgos.interpreter.expression.interfaces.NonTerminalExpression;
@@ -32,8 +32,8 @@ public class OrExpression implements NonTerminalExpression {
     }
 
     @Override
-    public void setValues(Expression value1, Expression value2) {
-        this.firstExpression = value1;
-        this.secondExpression = value2;
+    public void setValues(Expression firstExpression, Expression secondExpression) {
+        this.firstExpression = firstExpression;
+        this.secondExpression = secondExpression;
     }
 }

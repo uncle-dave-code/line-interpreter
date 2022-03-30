@@ -3,16 +3,20 @@ package com.dscfgos.interpreter.expression;
 import com.dscfgos.interpreter.expression.interfaces.Expression;
 import com.dscfgos.interpreter.expression.interfaces.TerminalExpression;
 
-public class BooleanExpression implements TerminalExpression {
+public class LogicalExpression implements TerminalExpression {
 
-    private Boolean value;
+    private Object value;
 
-    public BooleanExpression(Boolean value) {
+    public LogicalExpression(Boolean value) {
         this.value = value;
     }
 
-    public BooleanExpression(String value) {
+    public LogicalExpression(String value) {
         this.value = Boolean.valueOf(value);
+    }
+
+    public LogicalExpression(Object value) {
+        this.value = value;
     }
 
     @Override
