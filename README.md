@@ -2,19 +2,34 @@
 
 ## Introducción
 Biblioteca para la interpretación de directivas y comandos en los valores de las propiedades del Bbr Customizer
+### Prioridad
+1. Comandos - (FORMAT)
+2. Evalua Propiedades
+3. Evalua Expresiones
+4. Directivas (IF)
+
+#### Ejemplo 1:
+
+Input:
+
+Semana **\$NI(property1)** del **#FORMAT(\$DT, property2, DD/MM/YYYY)** al **#FORMAT(\$DT, property3, DD/MM/YYYY)**
+
+Output:
+
+Semana 12 del 01/02/2022 al 06/02/2022
+
+#### Ejemplo 2:
+
+Input:
+
+#IF(\$N(property1) > \$N(property2)){FFFFFF}:{000000}
+
+Output:
+
+FFFFFF or 000000
+
 
 ## Definiciones
-Las directivas deben estar encerradas dentro de "{}" y no pueden haber directivas dentro de otras.
-
-Ejemplo:
-
-Input: property1-> LocalDate
-
-"Acá tenemos {1+1} directivas {Format($D,property1,#DD/MM/YYYY)}"
-
-Output: Acá tenemos 2 directivas 11/12/2022
-
-
 
 ### Sintaxis
 En el lenguaje, van existir:
@@ -32,32 +47,46 @@ En el lenguaje, van existir:
 | Tipo | Descripción |
 |--|--|
 | $S | String |
-| $N | Numeric |
+| $NI | Integer |
+| $NF | Float |
 | $D | Date |
 | $DT | DateTime |
+| $T | DateTime |
 | $B | Boolean |
 | $A | Array |
 
 #### Operadores
 - Los operadores se dividen en aritméticos, comparación y lógicos
 
-| Operador | Descripción |
-|--|--|
-| + | Suma Numeric |
-| - | Resta Numeric |
-| * | Multiplica Numeric |
-| / | Divide Numeric |
-| == | Igual a |
-| != | No es igual |
-| > | Mayor que |
-| < | Menor que |
-| <= | Menor o igual que |
-| >= | Mayor o igual a |
-| & | And lógico |
-| \| | Or lógico |
+| Operador | Tipo | Descripción |
+|--|--|--|
+| + |Aritmético| **Suma Numeric y concatena String** |
+| - |Aritmético| **Resta Numeric y concatena String** |
+| * |Aritmético| **Multiplica Numeric** |
+| / |Aritmético| **Divide Numeric** |
+| ^ |Aritmético| **Exponential Operation** |
+| == |Relacional| Igual a |
+| != |Relacional| No es igual |
+| > |Relacional| Mayor que |
+| < |Relacional| Menor que |
+| <= |Relacional| Menor o igual que |
+| >= |Relacional| Mayor o igual a |
+| && |Lógicos| **And lógico** |
+| \|\||Lógicos | **Or lógico** |
 
 #### Directivas
+- Las directivas comienzan con # seguido del nombre.
 
+| Directiva | Descripción |
+|--|--|
+| #IF | #IF(){}:{} |
+
+#### Comandos
+| Comandos| Descripción |
+|--|--|
+| #FORMAT | #FORMAT(tipo,propiedad,'formato') |
+| #NOT| #NOT(boolean_expression) |
+| #EQUAL| #EQUAL(boolean_expression) |
 
 
 > Written with [StackEdit](https://stackedit.io/).

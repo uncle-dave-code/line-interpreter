@@ -1,29 +1,28 @@
-package com.dscfgos.interpreter.formatters;
+package com.dscfgos.interpreter.commands.formatters;
 
 import com.dscfgos.interpreter.classes.Property;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class PropertyTimeFormatter extends PropertyFormatter{
 
-    public PropertyTimeFormatter(String format, Property property, Locale locale) {
-        super(format, property, locale);
+    public PropertyTimeFormatter(String format, Object propertyValue, Locale locale) {
+        super(format, propertyValue, locale);
     }
 
     @Override
     public String format() {
         var formatter = DateTimeFormatter.ofPattern(this.getFormat());
 
-        var localTime = (LocalTime) this.getProperty().getValue();
+        var localTime = (LocalTime) getPropertyValue();
 
         return formatter.format(localTime);
     }
 
     @Override
-    public FormatterType getType() {
-        return FormatterType.TIME;
+    public PropertyType getType() {
+        return PropertyType.TIME;
     }
 }

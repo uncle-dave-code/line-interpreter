@@ -1,7 +1,7 @@
 package com.dscfgos.interpreter.expression.interfaces;
 
 public interface Expression {
-    public Object interpret();
+    Object interpret();
 
-    public boolean isOperator();
+    boolean isOperator();
 }

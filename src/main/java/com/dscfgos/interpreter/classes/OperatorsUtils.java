@@ -20,7 +20,7 @@ public class OperatorsUtils {
     private static final String operatorsRegEx = "((?=" + operators + ")|(?<=" + operators + "))";
 
     public static List<String> splitDirective(String context) {
-        List<String> result = (context != null && !context.isBlank()) ? Arrays.stream(context.split(operatorsRegEx))
+        var result = (context != null && !context.isBlank()) ? Arrays.stream(context.split(operatorsRegEx))
                 .filter(token -> token.trim().length() > 0)
                 .map(token -> token.trim())
                 .collect(Collectors.toList()) : null;
@@ -28,7 +28,7 @@ public class OperatorsUtils {
     }
 
     public static List<Expression> splitPostfixExpression(String postfix, ExpressionType expressionType) {
-        List<Expression> result = (postfix != null && !postfix.isBlank()) ?
+        var result = (postfix != null && !postfix.isBlank()) ?
                 Arrays.stream(postfix.split(operatorsRegEx))
                         .filter(token -> token.trim().length() > 0)
                         .map(token -> {

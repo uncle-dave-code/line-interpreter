@@ -78,7 +78,7 @@ public class ExpressionParser {
         return output;
     }
 
-    public Expression evaluatePostFixExpression(String postfix, ExpressionType expressionType) {
+    private Expression evaluatePostFixExpression(String postfix, ExpressionType expressionType) {
         Expression output = null;
         if (postfix != null && !postfix.isBlank()) {
             List<Expression> items = OperatorsUtils.splitPostfixExpression(postfix, expressionType);
@@ -107,12 +107,5 @@ public class ExpressionParser {
 
         return output.interpret().toString();
     }
-
-    public String formatCommand(String type, Property property, String format) {
-        String output = "";
-
-        return output;
-    }
-
 
 }
