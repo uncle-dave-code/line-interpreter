@@ -51,6 +51,9 @@ class CommandParserTest {
         System.out.println(commands.get(0).execute());
         System.out.println(commands.get(3).execute());
 
+
+
+
         assertAll(
                 () -> assertTrue(commands.get(0).execute().equalsIgnoreCase("11")),
                 () -> assertTrue(commands.get(1).execute().equalsIgnoreCase("01/04/2022 09:10:30")),

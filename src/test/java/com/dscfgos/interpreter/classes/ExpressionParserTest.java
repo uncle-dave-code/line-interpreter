@@ -58,8 +58,8 @@ class ExpressionParserTest {
         String infixExp1 = "a+b*(c^d-e)^(f+g*h)-i";
         String infixExp2 = "K + L - M*N + (O^P) * W/U/V * T + Q";
 
-        String result1 = interpreterParser.convertToPostFixExpression(infixExp1);
-        String result2 = interpreterParser.convertToPostFixExpression(infixExp2);
+        String result1 = interpreterParser.convertToPostFixExpression(infixExp1, null);
+        String result2 = interpreterParser.convertToPostFixExpression(infixExp2, null);
 
         assertAll(() -> assertTrue(result1.equalsIgnoreCase(" a b c d ^ e - f g h * + ^ * + i -")),
                 () -> assertTrue(result2.equalsIgnoreCase(" K L + M N * - O P ^ W * U / V / T * + Q +")));
@@ -70,7 +70,7 @@ class ExpressionParserTest {
     void evaluateArithmeticExpression() {
         String expression = "2 * (100 - 200) + 300 * 2";
 
-        String result1 = interpreterParser.evaluateExpression(expression, ExpressionType.ARITHMETIC);
+        String result1 = interpreterParser.interprete(expression);
 
         assertTrue(result1.equalsIgnoreCase("400.0"));
     }
@@ -84,10 +84,10 @@ class ExpressionParserTest {
         String expression3 = "true || false && true";
         String expression4 = "true || false";
 
-        String result1 = interpreterParser.evaluateExpression(expression1, ExpressionType.LOGICAL);
-        String result2 = interpreterParser.evaluateExpression(expression2, ExpressionType.LOGICAL);
-        String result3 = interpreterParser.evaluateExpression(expression3, ExpressionType.LOGICAL);
-        String result4 = interpreterParser.evaluateExpression(expression4, ExpressionType.LOGICAL);
+        String result1 = interpreterParser.interprete(expression1);
+        String result2 = interpreterParser.interprete(expression2);
+        String result3 = interpreterParser.interprete(expression3);
+        String result4 = interpreterParser.interprete(expression4);
 
         assertAll(
                 () -> assertTrue(result1.equalsIgnoreCase("true")),
@@ -110,14 +110,14 @@ class ExpressionParserTest {
         String expression7 = "1==2";
         String expression8 = "1==2";
 
-        String result1 = interpreterParser.evaluateExpression(expression1, ExpressionType.RELATIONAL);
-        String result2 = interpreterParser.evaluateExpression(expression2, ExpressionType.RELATIONAL);
-        String result3 = interpreterParser.evaluateExpression(expression3, ExpressionType.RELATIONAL);
-        String result4 = interpreterParser.evaluateExpression(expression4, ExpressionType.RELATIONAL);
-        String result5 = interpreterParser.evaluateExpression(expression5, ExpressionType.RELATIONAL);
-        String result6 = interpreterParser.evaluateExpression(expression6, ExpressionType.RELATIONAL);
-        String result7 = interpreterParser.evaluateExpression(expression7, ExpressionType.RELATIONAL);
-        String result8 = interpreterParser.evaluateExpression(expression8, ExpressionType.RELATIONAL);
+        String result1 = interpreterParser.interprete(expression1);
+        String result2 = interpreterParser.interprete(expression2);
+        String result3 = interpreterParser.interprete(expression3);
+        String result4 = interpreterParser.interprete(expression4);
+        String result5 = interpreterParser.interprete(expression5);
+        String result6 = interpreterParser.interprete(expression6);
+        String result7 = interpreterParser.interprete(expression7);
+        String result8 = interpreterParser.interprete(expression8);
 
         assertAll(
                 () -> assertTrue(result1.equalsIgnoreCase("false")),

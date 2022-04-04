@@ -2,6 +2,8 @@ package com.dscfgos.interpreter;
 
 import com.dscfgos.interpreter.classes.CommandsUtils;
 import com.dscfgos.interpreter.classes.Property;
+import com.dscfgos.interpreter.commands.CommandParser;
+import com.dscfgos.interpreter.flow.ControlFlowParser;
 
 import java.util.List;
 import java.util.Locale;
@@ -25,7 +27,11 @@ public class SLI {
 
         String result = "";
         if (context != null) {
-            result = CommandsUtils.processCommandLines(context, params, locale);
+            CommandParser commandParser = new CommandParser();
+            ControlFlowParser controlFlowParser = new ControlFlowParser();
+
+            var commandResult = commandParser.interprete(context, params, locale);
+            result = controlFlowParser.interprete(commandResult, params, locale);
         }
 
         return result;

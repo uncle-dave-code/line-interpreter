@@ -17,8 +17,7 @@ import java.util.stream.Collectors;
 
 public class CommandsUtils {
 
-    //private static final String formatRegEx = "#FORMAT\\s*\\((.*?)\\)";
-    private static final String commandsRegEx = "#FORMAT\\s*\\((.*?)\\)|#IF\\s*\\((.*?)\\)|#STR\\s*\\((.*?)\\)";
+    private static final String commandsRegEx = "#FORMAT\\s*\\((.*?)\\)|#STR\\s*\\((.*?)\\)";
     private static final String parametersRegEx = "\\s*\\((.*?)\\)";
     private static final String splitParamsRegEx = ",(?=(?:[^\\']*\\'[^\\']*\\')*[^\\']*$)";
     private static final String removeQuotesParamsRegEx = "'(.*?)'";
@@ -82,7 +81,7 @@ public class CommandsUtils {
 
             while (regexMatcher.find()) {
                 String parameters = regexMatcher.group(1);
-                if ((parameters != null) && !parameters.isBlank()){
+                if ((parameters != null) && !parameters.isBlank()) {
                     Pattern rg = Pattern.compile(removeQuotesParamsRegEx);
                     result = Arrays.stream(parameters.split(splitParamsRegEx))
                             .map(token -> {
@@ -121,20 +120,20 @@ public class CommandsUtils {
                 result.add(command);
             }
         }
-
         return result.isEmpty() ? null : result;
     }
 
-    public static String processCommandLines(String context, List<Property> params,Locale locale) {
-        String result = "";
+    public static String processCommandLines(String context, List<Property> params, Locale locale) {
+        String result = context;
         if (context != null) {
             Pattern regex = Pattern.compile(commandsRegEx);
             Matcher regexMatcher = regex.matcher(context);
-
-            result = regexMatcher.replaceAll(matchResult -> {
-                var command = CommandsUtils.getCommand(regexMatcher.group(0),params, locale);
-                return command.execute();
-            });
+            if (regexMatcher.find()) {
+                result = regexMatcher.replaceAll(matchResult -> {
+                    var command = CommandsUtils.getCommand(regexMatcher.group(0), params, locale);
+                    return command.execute();
+                });
+            }
         }
 
         return result;
@@ -147,8 +146,8 @@ public class CommandsUtils {
             Matcher regexMatcher = regex.matcher(context);
 
             if (regexMatcher.find()) {
-                result = new GroupPosition(regexMatcher.start(),regexMatcher.end(), regexMatcher.group(0));
-             }
+                result = new GroupPosition(regexMatcher.start(), regexMatcher.end(), regexMatcher.group(0));
+            }
         }
 
         return result;
@@ -160,8 +159,7 @@ public class CommandsUtils {
         if (command != null) {
             if (command.startsWith(CMD_FORMAT)) {
                 result = new FormatCommand(command, params, locale);
-            }
-            else if (command.startsWith(CMD_STR)) {
+            } else if (command.startsWith(CMD_STR)) {
                 result = new ToStringCommand(command, params);
             }
         }

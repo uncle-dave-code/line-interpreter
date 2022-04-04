@@ -20,16 +20,20 @@ class SLITest {
 
         String testCommands = "Semana #STR(propiedad1) del #FORMAT($DT,propiedad2,'dd/MM/YYYY') al #FORMAT($DT,propiedad3,dd/MM/YYYY)";
 
+        //String testCommands = "#IFELSE(propiedad1<propiedad4){ #FORMAT($DT,propiedad3,dd/MM/YYYY)}:{otra cosa}";
+
         var date1 = LocalDateTime.of(2022, Month.APRIL, 1, 9, 10, 30);
         var date2 = LocalDateTime.of(2022, Month.APRIL, 6, 9, 10, 30);
 
         Property pro1 = new Property("propiedad1", 11);
+        Property pro4 = new Property("propiedad4", 2);
         Property pro2 = new Property("propiedad2", date1);
         Property pro3 = new Property("propiedad3", date2);
-        var items = List.of(pro1, pro2, pro3);
+        var items = List.of(pro1, pro2, pro3, pro4);
 
         String replaced = SLI.interprete(testCommands, items, new Locale("es"));
+        System.out.println(replaced);
 
-        assertTrue(replaced.equalsIgnoreCase("Semana 11 del 01/04/2022 al 06/04/2022"));
+        //assertTrue(replaced.equalsIgnoreCase("Semana 11 del 01/04/2022 al 06/04/2022  Uno es uno 11"));
     }
 }

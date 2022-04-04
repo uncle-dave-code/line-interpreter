@@ -32,4 +32,19 @@ class CommandsUtilsTest {
             System.out.println(command);
         }
     }
+
+    @Test
+    @DisplayName("spliting simple directive")
+    void splitFlowControl() {
+
+        String text = "#IF(asdasdsad){asdasdsadasd} #IFELSE(asdasdsad){asdasd}:{asdasdasd} asdasdasd #IF(sdasd){sdfsdfdsfsd}";
+
+        var list = ControlFlowUtils.getControlFlowLines(text);
+
+        for (var command:list) {
+            System.out.println(command);
+        }
+    }
+
+
 }

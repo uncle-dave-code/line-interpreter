@@ -3,19 +3,15 @@ package com.dscfgos.interpreter.expression;
 import com.dscfgos.interpreter.expression.interfaces.Expression;
 import com.dscfgos.interpreter.expression.interfaces.TerminalExpression;
 
-public class ArithmeticExpression implements TerminalExpression {
+public class GenericExpression implements TerminalExpression {
 
     private Object value;
 
-    public ArithmeticExpression(Double value) {
+    public GenericExpression(Object value) {
         this.value = value;
     }
 
-    public ArithmeticExpression(String value) {
-        this.value = Double.valueOf(value);
-    }
-
-    public ArithmeticExpression(Object value) {
+    public GenericExpression(String value) {
         this.value = value;
     }
 
@@ -29,6 +25,6 @@ public class ArithmeticExpression implements TerminalExpression {
 
     @Override
     public void setValue(Expression expression) {
-        this.value = (Double) expression.interpret();
+        this.value = expression.interpret();
     }
 }

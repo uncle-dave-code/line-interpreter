@@ -1,11 +1,10 @@
 package com.dscfgos.interpreter.expression;
 
-import com.dscfgos.interpreter.classes.ExpressionType;
+import com.dscfgos.interpreter.classes.CommandsUtils;
 import com.dscfgos.interpreter.classes.OperatorsUtils;
 import com.dscfgos.interpreter.classes.Property;
 import com.dscfgos.interpreter.expression.interfaces.Expression;
 import com.dscfgos.interpreter.expression.interfaces.NonTerminalExpression;
-import com.dscfgos.interpreter.expression.interfaces.TerminalExpression;
 
 import java.util.List;
 import java.util.Stack;
@@ -17,7 +16,7 @@ public class ExpressionParser {
     }
 
     public String interprete(String context, List<Property> params) {
-        return context;
+        return this.evaluateExpression(context, params);
     }
 
 
@@ -35,7 +34,7 @@ public class ExpressionParser {
      * @param context Infix expression
      * @return Postfix expression
      */
-    public String convertToPostFixExpression(String context) {
+    public String convertToPostFixExpression(String context, List<Property> params) {
         String output = "";
 
         List<String> expression = OperatorsUtils.splitDirective(context);
@@ -65,6 +64,9 @@ public class ExpressionParser {
                 }
                 // If the current item is an operand, output it.
                 else {
+                    var propertyValue = CommandsUtils.getPropertyValue(item, params);
+                    item = (propertyValue == null) ? item : propertyValue.toString();
+
                     output += " " + item;
                 }
             }
@@ -78,19 +80,19 @@ public class ExpressionParser {
         return output;
     }
 
-    private Expression evaluatePostFixExpression(String postfix, ExpressionType expressionType) {
+    private Expression getExpression(String postfix) {
         Expression output = null;
         if (postfix != null && !postfix.isBlank()) {
-            List<Expression> items = OperatorsUtils.splitPostfixExpression(postfix, expressionType);
+            List<Expression> items = OperatorsUtils.splitPostfixExpression(postfix);
             Stack<Expression> stack = new Stack<>();
 
             for (var item : items) {
                 if (item instanceof NonTerminalExpression) {
                     Expression val1 = stack.pop();
-                    Expression val2 = stack.isEmpty() ? OperatorsUtils.getTerminalExpression(expressionType) : stack.pop();
+                    Expression val2 = stack.isEmpty() ? new GenericExpression(null) : stack.pop();
                     ((NonTerminalExpression) item).setValues(val2, val1);
 
-                    stack.push(OperatorsUtils.getTerminalExpression(expressionType, item.interpret()));
+                    stack.push(new GenericExpression(item.interpret()));
                 } else {
                     stack.push(item);
                 }
@@ -101,9 +103,9 @@ public class ExpressionParser {
         return output;
     }
 
-    public String evaluateExpression(String expression, ExpressionType expressionType) {
-        String postFixExpression = convertToPostFixExpression(expression);
-        Expression output = evaluatePostFixExpression(postFixExpression, expressionType);
+    private String evaluateExpression(String expression, List<Property> params) {
+        String postFixExpression = convertToPostFixExpression(expression, params);
+        Expression output = getExpression(postFixExpression);
 
         return output.interpret().toString();
     }

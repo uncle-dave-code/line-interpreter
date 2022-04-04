@@ -1,8 +1,6 @@
 package com.dscfgos.interpreter.classes;
 
-import com.dscfgos.interpreter.expression.ArithmeticExpression;
-import com.dscfgos.interpreter.expression.LogicalExpression;
-import com.dscfgos.interpreter.expression.RelationalExpression;
+import com.dscfgos.interpreter.expression.GenericExpression;
 import com.dscfgos.interpreter.expression.logical.AndExpression;
 import com.dscfgos.interpreter.expression.logical.OrExpression;
 import com.dscfgos.interpreter.expression.interfaces.Expression;
@@ -27,7 +25,7 @@ public class OperatorsUtils {
         return result;
     }
 
-    public static List<Expression> splitPostfixExpression(String postfix, ExpressionType expressionType) {
+    public static List<Expression> splitPostfixExpression(String postfix) {
         var result = (postfix != null && !postfix.isBlank()) ?
                 Arrays.stream(postfix.split(operatorsRegEx))
                         .filter(token -> token.trim().length() > 0)
@@ -35,7 +33,7 @@ public class OperatorsUtils {
                             if (isOperator(token)) {
                                 return getExpression(token);
                             } else {
-                                return getTerminalExpression(expressionType, token);
+                                return new GenericExpression(token);
                             }
                         })
                         .collect(Collectors.toList()) : null;
@@ -93,40 +91,6 @@ public class OperatorsUtils {
         }
 
         return result;
-    }
-
-    public static TerminalExpression getTerminalExpression(ExpressionType expressionType, Object value) {
-        TerminalExpression result = null;
-        switch (expressionType) {
-            case ARITHMETIC:
-                result = new ArithmeticExpression(value);
-                break;
-            case LOGICAL:
-                result = new LogicalExpression(value);
-                break;
-            case RELATIONAL:
-                result = new RelationalExpression(value);
-                break;
-        }
-
-        return result;
-    }
-
-    public static TerminalExpression getTerminalExpression(ExpressionType expressionType) {
-        Object defaultValue = null;
-        switch (expressionType) {
-            case ARITHMETIC:
-                defaultValue = Double.valueOf(0);
-                break;
-            case LOGICAL:
-                defaultValue = Boolean.TRUE;
-                break;
-            case RELATIONAL:
-                defaultValue = Double.valueOf(0);
-                break;
-        }
-
-        return getTerminalExpression(expressionType, defaultValue);
     }
 
     public static int Precedence(String operator) {
