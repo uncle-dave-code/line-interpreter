@@ -1,20 +1,15 @@
 package com.dscfgos.interpreter.flow;
 
-import com.dscfgos.interpreter.SLI;
-import com.dscfgos.interpreter.classes.CommandsUtils;
-import com.dscfgos.interpreter.classes.ControlFlowUtils;
-import com.dscfgos.interpreter.classes.Property;
-import com.dscfgos.interpreter.commands.formatters.PropertyFormatter;
-import com.dscfgos.interpreter.commands.formatters.PropertyType;
 import com.dscfgos.interpreter.expression.ExpressionParser;
 import com.dscfgos.interpreter.flow.interfaces.ControlFlowBase;
+import com.dscfgos.interpreter.utils.InterpreteProperty;
+import com.dscfgos.interpreter.utils.RegExPatterns;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class IfElseControlFlow implements ControlFlowBase {
     private String expression;
@@ -22,7 +17,7 @@ public class IfElseControlFlow implements ControlFlowBase {
     private String resultFalse;
     private ExpressionParser expressionParser = new ExpressionParser();
 
-    public IfElseControlFlow(String command, List<Property> params, Locale locale) {
+    public IfElseControlFlow(String command, List<InterpreteProperty> params, Locale locale) {
         List<String> lstParameters = this.getIfElseParameters(command);
         if (lstParameters != null && lstParameters.size() == 3) {
             this.expression = expressionParser.interprete(lstParameters.get(0), params);
@@ -40,8 +35,8 @@ public class IfElseControlFlow implements ControlFlowBase {
     private List<String> getIfElseParameters(String command) {
         List<String> result = null;
         if (command != null) {
-            Pattern regex = Pattern.compile(ControlFlowUtils.IFELSERegEx);
-            Matcher regexMatcher = regex.matcher(command);
+
+            Matcher regexMatcher = RegExPatterns.regexIfElsePattern.matcher(command);
             if (regexMatcher.find()) {
                 result = new ArrayList<>();
                 result.add(regexMatcher.group(1));

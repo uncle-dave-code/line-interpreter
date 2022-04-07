@@ -16,7 +16,9 @@ public class GenericExpression implements TerminalExpression {
     }
 
     @Override
-    public boolean isOperator(){ return false;}
+    public boolean isOperator() {
+        return false;
+    }
 
     @Override
     public Object interpret() {

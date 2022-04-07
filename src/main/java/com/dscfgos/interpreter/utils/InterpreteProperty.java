@@ -1,11 +1,11 @@
-package com.dscfgos.interpreter.classes;
+package com.dscfgos.interpreter.utils;
 
 import lombok.Data;
 
 @Data
-public class Property {
+public class InterpreteProperty {
 
-    public Property(String code, Object value) {
+    public InterpreteProperty(String code, Object value) {
         this.code = code;
         this.value = value;
     }

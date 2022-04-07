@@ -1,14 +1,8 @@
 package com.dscfgos.interpreter.flow;
 
-import com.dscfgos.interpreter.classes.CommandsUtils;
-import com.dscfgos.interpreter.classes.ControlFlowUtils;
-import com.dscfgos.interpreter.classes.Property;
-import com.dscfgos.interpreter.commands.interfaces.CommandBase;
-import com.dscfgos.interpreter.flow.interfaces.ControlFlowBase;
+import com.dscfgos.interpreter.utils.ControlFlowUtils;
+import com.dscfgos.interpreter.utils.InterpreteProperty;
 
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -18,11 +12,11 @@ public class ControlFlowParser {
         return this.interprete(context, null, new Locale("es"));
     }
 
-    public String interprete(String context, List<Property> params, Locale locale) {
-        return this.processControlFlows(context,params,locale);
+    public String interprete(String context, List<InterpreteProperty> params, Locale locale) {
+        return this.processControlFlows(context, params, locale);
     }
 
-    private String processControlFlows(String context, List<Property> params, Locale locale){
+    private String processControlFlows(String context, List<InterpreteProperty> params, Locale locale) {
         return ControlFlowUtils.processControlFlowLines(context, params, locale);
     }
 }

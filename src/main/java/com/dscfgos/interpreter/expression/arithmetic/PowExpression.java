@@ -16,10 +16,9 @@ public class PowExpression implements NonTerminalExpression {
         super();
     }
 
-
     @Override
     public Object interpret() {
-        return Math.pow(Double.valueOf(this.firstExpression.interpret().toString()) , Double.valueOf(this.secondExpression.interpret().toString()));
+        return Math.pow(Double.valueOf(this.firstExpression.interpret().toString()), Double.valueOf(this.secondExpression.interpret().toString()));
     }
 
     @Override
@@ -28,7 +27,9 @@ public class PowExpression implements NonTerminalExpression {
     }
 
     @Override
-    public String toString() { return "^"; }
+    public String toString() {
+        return "^";
+    }
 
     @Override
     public void setValues(Expression firstExpression, Expression secondExpression) {

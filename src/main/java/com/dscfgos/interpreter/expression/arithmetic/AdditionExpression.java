@@ -27,7 +27,9 @@ public class AdditionExpression implements NonTerminalExpression {
     }
 
     @Override
-    public boolean isOperator(){ return true;}
+    public boolean isOperator() {
+        return true;
+    }
 
     @Override
     public void setValues(Expression firstExpression, Expression secondExpression) {

@@ -1,6 +1,5 @@
 package com.dscfgos.interpreter.commands.formatters;
 
-import com.dscfgos.interpreter.classes.Property;
 import lombok.Data;
 
 import java.util.Locale;
@@ -16,7 +15,7 @@ public abstract class PropertyFormatter {
 
     public abstract PropertyType getType();
 
-    public PropertyFormatter(String format, Object propertyValue, Locale locale){
+    public PropertyFormatter(String format, Object propertyValue, Locale locale) {
         this.format = format;
         this.propertyValue = propertyValue;
         this.locale = locale;

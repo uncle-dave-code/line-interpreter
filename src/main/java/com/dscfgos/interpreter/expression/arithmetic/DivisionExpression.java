@@ -11,6 +11,7 @@ public class DivisionExpression implements NonTerminalExpression {
         this.firstExpression = firstExpression;
         this.secondExpression = secondExpression;
     }
+
     public DivisionExpression() {
         super();
     }
@@ -21,10 +22,14 @@ public class DivisionExpression implements NonTerminalExpression {
     }
 
     @Override
-    public String toString() { return "/"; }
+    public String toString() {
+        return "/";
+    }
 
     @Override
-    public boolean isOperator(){ return true;}
+    public boolean isOperator() {
+        return true;
+    }
 
     @Override
     public void setValues(Expression firstExpression, Expression secondExpression) {

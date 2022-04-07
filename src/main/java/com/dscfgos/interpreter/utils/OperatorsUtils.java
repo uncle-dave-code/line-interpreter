@@ -1,11 +1,10 @@
-package com.dscfgos.interpreter.classes;
+package com.dscfgos.interpreter.utils;
 
 import com.dscfgos.interpreter.expression.GenericExpression;
+import com.dscfgos.interpreter.expression.arithmetic.*;
+import com.dscfgos.interpreter.expression.interfaces.Expression;
 import com.dscfgos.interpreter.expression.logical.AndExpression;
 import com.dscfgos.interpreter.expression.logical.OrExpression;
-import com.dscfgos.interpreter.expression.interfaces.Expression;
-import com.dscfgos.interpreter.expression.arithmetic.*;
-import com.dscfgos.interpreter.expression.interfaces.TerminalExpression;
 import com.dscfgos.interpreter.expression.relational.*;
 
 import java.util.Arrays;
@@ -14,36 +13,27 @@ import java.util.stream.Collectors;
 
 public class OperatorsUtils {
 
-    private static final String operators = " |\\+|\\*|-|/|\\(|\\)|\\^|&&|\\|\\||<=|>=|<(?!=)|>(?!=)|==|\\!=";
-    private static final String operatorsRegEx = "((?=" + operators + ")|(?<=" + operators + "))";
-
     public static List<String> splitDirective(String context) {
-        var result = (context != null && !context.isBlank()) ? Arrays.stream(context.split(operatorsRegEx))
-                .filter(token -> token.trim().length() > 0)
-                .map(token -> token.trim())
-                .collect(Collectors.toList()) : null;
+        var result = (context != null && !context.isBlank())
+                ? Arrays.stream(context.split(RegExPatterns.operatorsRegEx)).filter(token -> token.trim().length() > 0).map(token -> token.trim()).collect(Collectors.toList())
+                : null;
         return result;
     }
 
     public static List<Expression> splitPostfixExpression(String postfix) {
-        var result = (postfix != null && !postfix.isBlank()) ?
-                Arrays.stream(postfix.split(operatorsRegEx))
-                        .filter(token -> token.trim().length() > 0)
-                        .map(token -> {
-                            if (isOperator(token)) {
-                                return getExpression(token);
-                            } else {
-                                return new GenericExpression(token);
-                            }
-                        })
-                        .collect(Collectors.toList()) : null;
+        var result = (postfix != null && !postfix.isBlank()) ? Arrays.stream(postfix.split(RegExPatterns.operatorsRegEx)).filter(token -> token.trim().length() > 0).map(token -> {
+            if (isOperator(token)) {
+                return getExpression(token);
+            } else {
+                return new GenericExpression(token);
+            }
+        }).collect(Collectors.toList()) : null;
         return result;
     }
 
     public static boolean isOperator(String s) {
-        return (s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/") || s.equals("^") || s.equals("MOD")
-                || s.equals("&&") || s.equals("||")
-                || s.equals("==") || s.equals("!=") || s.equals(">") || s.equals(">=") || s.equals("<") || s.equals("<="));
+        return (s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/") || s.equals("^") || s.equals("MOD") || s.equals("&&") || s.equals("||") || s.equals("==") || s.equals("!=")
+                || s.equals(">") || s.equals(">=") || s.equals("<") || s.equals("<="));
     }
 
     public static Expression getExpression(String operator) {
@@ -97,13 +87,13 @@ public class OperatorsUtils {
         switch (operator) {
             case "+":
             case "-":
-                return 1;
+                return 31;
             case "*":
             case "/":
             case "MOD":
-                return 2;
+                return 42;
             case "^":
-                return 3;
+                return 43;
             case "==":
             case "!=":
                 return 10;
@@ -113,9 +103,9 @@ public class OperatorsUtils {
             case ">=":
                 return 11;
             case "&&":
-                return 20;
-            case "||":
                 return 21;
+            case "||":
+                return 20;
         }
         return -1;
     }

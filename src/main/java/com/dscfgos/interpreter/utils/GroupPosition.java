@@ -1,4 +1,4 @@
-package com.dscfgos.interpreter.classes;
+package com.dscfgos.interpreter.utils;
 
 import lombok.Data;
 

@@ -22,10 +22,14 @@ public class MultiplicationExpression implements NonTerminalExpression {
     }
 
     @Override
-    public boolean isOperator(){ return true;}
+    public boolean isOperator() {
+        return true;
+    }
 
     @Override
-    public String toString() { return "*"; }
+    public String toString() {
+        return "*";
+    }
 
     @Override
     public void setValues(Expression firstExpression, Expression secondExpression) {

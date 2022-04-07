@@ -27,7 +27,9 @@ public class SubtractionExpression implements NonTerminalExpression {
     }
 
     @Override
-    public String toString() { return "-"; }
+    public String toString() {
+        return "-";
+    }
 
     @Override
     public void setValues(Expression firstExpression, Expression secondExpression) {
