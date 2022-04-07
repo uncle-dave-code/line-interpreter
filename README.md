@@ -1,7 +1,7 @@
-# Bbr Properties Intepreter
+# Properties Intepreter
 
 ## Introducción
-Biblioteca para la interpretación de directivas y comandos en los valores de las propiedades del Bbr Customizer
+Biblioteca para la interpretación de directivas y comandos
 ### Prioridad
 1. Comandos - (FORMAT)
 2. Evalua Propiedades
